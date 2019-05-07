@@ -58,20 +58,25 @@ if($_POST){
             <td>Tipo Produto</td>
             <td>
             <?php
-            $tipoProdutoSelecionado = $produto->$nome;
-            
+
             $stmt = $tipoProduto->read();
             echo "<select class='form-control' name='tipo_produto_id'>";
                 echo "<option>Selecionar tipo produto</option>";
-            
+                
                 while ($row_category = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    extract($row_category);
-                    if($tipo_produto_id == $tipoProdutoSelecionado){
-                        $selected = 'selected="selected"';
+                    $tipo_produto_id=$row_category['tipo_produto_id'];
+                    $nome = $row_category['nome'];
+             
+                    // current category of the product must be selected
+                    if($produto->tipo_produto_id==$tipo_produto_id){
+                        echo "<option value='$tipo_produto_id' selected>";
+                    }else{
+                        echo "<option value='$tipo_produto_id'>";
                     }
-
-                    echo "<option value='{$tipo_produto_id}' $selected>{$nome}</option>";
+             
+                    echo "$nome</option>";
                 }
+
             echo "</select>";
             ?>
             </td>
