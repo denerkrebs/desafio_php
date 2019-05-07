@@ -1,8 +1,7 @@
 <?php
 
-$con_string = "host=127.0.0.1 port=5432 dbname=desafio_php user=postgres password=root";
-$connection = pg_connect($con_string);
+require __DIR__ . '/config/db.php';
 
-if($connection){
-    echo "Conectado";
-}
+// get database connection
+$database = new Database();
+$db = $database->getConnection();

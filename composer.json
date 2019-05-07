@@ -1,0 +1,10 @@
+{
+    "name": "dener/htdocs",
+    "authors": [
+        {
+            "name": "Dener Krebs",
+            "email": "krebsdener@gmail.com"
+        }
+    ],
+    "require": {}
+}

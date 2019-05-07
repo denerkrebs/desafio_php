@@ -1,0 +1,22 @@
+CREATE TABLE tipo_produto(
+ tipo_produto_id serial UNIQUE PRIMARY KEY,
+ nome VARCHAR (200) NOT NULL,
+ percentual_imposto decimal (10,2) NOT NULL
+);
+
+CREATE TABLE produto(
+ produto_id serial UNIQUE,
+ nome VARCHAR (200) NOT NULL,
+ preco decimal (10,2) NOT NULL,
+ tipo_produto_id INTEGER REFERENCES tipo_produto(tipo_produto_id),
+ PRIMARY KEY (produto_id, tipo_produto_id)
+);
+
+CREATE TABLE venda(
+ venda_id serial UNIQUE,
+ produto_id INTEGER NOT NULL REFERENCES produto(produto_id),
+ quantidade INTEGER NOT NULL,
+ valor_total decimal (10,2) NOT NULL,
+ valor_total_imposto decimal (10,2) NOT NULL,
+ PRIMARY KEY (venda_id, produto_id)
+);
