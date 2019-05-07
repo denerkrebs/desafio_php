@@ -1,11 +1,8 @@
 <?php
 class TipoProduto{
- 
-    // database connection and table name
     private $conn;
     private $table_name = "tipo_produto";
  
-    // object properties
     public $tipo_produto_id;
     public $nome;
     public $percentual_imposto;
@@ -14,9 +11,7 @@ class TipoProduto{
         $this->conn = $db;
     }
  
-    // used by select drop-down list
     function read(){
-        //select all data
         $query = "SELECT
                     tipo_produto_id, nome
                 FROM
@@ -30,17 +25,15 @@ class TipoProduto{
         return $stmt;
     }
 
-    // used to read category name by its ID
     function readName(){
-        
-        $query = "SELECT name FROM " . $this->table_name . " WHERE id = ? limit 0,1";
+        $query = "SELECT nome FROM " . $this->table_name . " WHERE tipo_produto_id = ?";
     
         $stmt = $this->conn->prepare( $query );
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(1, $this->tipo_produto_id);
         $stmt->execute();
     
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        $this->name = $row['nome'];
+        $this->nome = $row['nome'];
     }
 }

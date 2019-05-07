@@ -6,12 +6,13 @@ require __DIR__ . '/include/header.php';
 require __DIR__ . '/config/db.php';
 require __DIR__ . '/objetos/produto.php';
 require __DIR__ . '/objetos/tipo_produto.php';
- 
-// get database connection
+
+// get ID of the product to be edited
+$id = $_GET['id'];
+
 $database = new Database();
 $db = $database->getConnection();
  
-// pass connection to objects
 $produto = new Produto($db);
 $tipoProduto = new TipoProduto($db);
 
@@ -19,9 +20,14 @@ echo "<div class='right-button-margin'>";
     echo "<a href='index.php' class='btn btn-default pull-right'>Read Products</a>";
 echo "</div>";
 
+if($id != null){
+    $produto->produto_id = $id;
+    $produto->buscarProdutoId($id);
+}
+
 ?>
-<?php 
-// if the form was submitted - PHP OOP CRUD Tutorial
+<?php
+
 if($_POST){
     $produto->nome = $_POST['nome'];
     $produto->preco = $_POST['preco'];
@@ -38,32 +44,33 @@ if($_POST){
 }
 ?>
  
-<!-- HTML form for creating a product -->
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
- 
     <table class='table table-hover table-responsive table-bordered'>
         <tr>
             <td>Produto</td>
-            <td><input type='text' name='nome' class='form-control' /></td>
+            <td><input type='text' name='nome' value='<?php echo $produto->nome; ?>' class='form-control' /></td>
         </tr>
         <tr>
             <td>Preço</td>
-            <td><input type='text' name='preco' class='form-control' /></td>
+            <td><input type='text' name='preco' value='<?php echo $produto->preco; ?>' class='form-control' /></td>
         </tr>
         <tr>
             <td>Tipo Produto</td>
             <td>
             <?php
-            // read the product categories from the database
-            $stmt = $tipoProduto->read();
+            $tipoProdutoSelecionado = $produto->$nome;
             
-            // put them in a select drop-down
+            $stmt = $tipoProduto->read();
             echo "<select class='form-control' name='tipo_produto_id'>";
                 echo "<option>Selecionar tipo produto</option>";
             
                 while ($row_category = $stmt->fetch(PDO::FETCH_ASSOC)){
                     extract($row_category);
-                    echo "<option value='{$tipo_produto_id}'>{$nome}</option>";
+                    if($tipo_produto_id == $tipoProdutoSelecionado){
+                        $selected = 'selected="selected"';
+                    }
+
+                    echo "<option value='{$tipo_produto_id}' $selected>{$nome}</option>";
                 }
             echo "</select>";
             ?>
@@ -80,4 +87,3 @@ if($_POST){
 <?php
 
 require __DIR__ . '/include/footer.php';
-?>
