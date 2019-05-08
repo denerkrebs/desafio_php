@@ -10,6 +10,51 @@ class TipoProduto{
     public function __construct($db){
         $this->conn = $db;
     }
+
+    function create(){
+        $query = "INSERT INTO
+                    " . $this->table_name . "
+                    (nome, percentual_imposto) 
+                VALUES
+                    (:nome, :percentual_imposto)";
+
+        $stmt = $this->conn->prepare($query);
+        
+        $this->nome=htmlspecialchars(strip_tags($this->nome));
+        $this->percentual_imposto=htmlspecialchars(strip_tags($this->percentual_imposto));
+        
+        $stmt->bindParam(":nome", $this->nome);
+        $stmt->bindParam(":percentual_imposto", $this->percentual_imposto);
+        
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function update(){
+        $query = "UPDATE " 
+                    . $this->table_name . " 
+                SET 
+                    nome = :nome, 
+                    percentual_imposto = :percentual_imposto, 
+                WHERE
+                    produto_id = :produto_id";
+    
+        $stmt = $this->conn->prepare($query);
+    
+        $this->nome=htmlspecialchars(strip_tags($this->nome));
+        $this->percentual_imposto=htmlspecialchars(strip_tags($this->percentual_imposto));
+    
+        $stmt->bindParam(":produto_id", $this->tipo_produto_id);
+        $stmt->bindParam(":nome", $this->nome);
+        $stmt->bindParam(":percentual_imposto", $this->percentual_imposto);
+    
+        if($stmt->execute()){
+            return true;
+        } 
+    }
  
     function read(){
         $query = "SELECT
@@ -25,8 +70,8 @@ class TipoProduto{
         return $stmt;
     }
 
-    function readName(){
-        $query = "SELECT nome FROM " . $this->table_name . " WHERE tipo_produto_id = ?";
+    function getTipoProduto(){
+        $query = "SELECT * FROM " . $this->table_name . " WHERE tipo_produto_id = ?";
     
         $stmt = $this->conn->prepare( $query );
         $stmt->bindParam(1, $this->tipo_produto_id);
@@ -35,5 +80,6 @@ class TipoProduto{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         $this->nome = $row['nome'];
+        $this->percentual_imposto = $row['percentual_imposto']; 
     }
 }

@@ -8,7 +8,7 @@ require __DIR__ . '/objetos/produto.php';
 require __DIR__ . '/objetos/tipo_produto.php';
 
 echo "<div class='right-button-margin'>";
-    echo "<a href='produto.php' class='btn btn-default pull-right'>Criar Produto</a>";
+    echo "<a href='produto.php' class='btn btn-primary pull-right'>Criar Produto</a>";
 echo "</div>";
  
 $database = new Database();
@@ -26,6 +26,7 @@ if($num > 0){
             echo "<th>Produto</th>";
             echo "<th>Preço</th>";
             echo "<th>Tipo de produto</th>";
+            echo "<th>Percentual imposto</th>";
         echo "</tr>";
  
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -37,21 +38,22 @@ if($num > 0){
                 echo "<td>{$preco}</td>";
                 echo "<td>";
                     $tipoProduto->tipo_produto_id = $tipo_produto_id;
-                    $tipoProduto->readName();
+                    $tipoProduto->getTipoProduto();
                     echo $tipoProduto->nome;
+                echo "</td>";
+                echo "<td>";
+                $tipoProduto->tipo_produto_id = $tipo_produto_id;
+                $tipoProduto->getTipoProduto();
+                echo $tipoProduto->percentual_imposto + 0 . "%";
                 echo "</td>";
  
                 echo "<td>";
-                echo "<a href='read_one.php?id={$produto_id}' class='btn btn-primary left-margin'>
-                <span class='glyphicon glyphicon-list'></span> Read
-                </a>
-
-                <a href='produto.php?id={$produto_id}' class='btn btn-info left-margin'>
-                <span class='glyphicon glyphicon-edit'></span> Edit
+                echo "<a href='editar_produto.php?id={$produto_id}' class='btn btn-info left-margin'>
+                <span class='glyphicon glyphicon-edit'></span> Editar
                 </a>
 
                 <a delete-id='{$produto_id}' class='btn btn-danger delete-object'>
-                <span class='glyphicon glyphicon-remove'></span> Delete
+                <span class='glyphicon glyphicon-remove'></span> Excluir
                 </a>";
                 echo "</td>";
  
