@@ -71,7 +71,7 @@ if($_POST){
         </tr>
     </table>
     <div class="pull-right">
-        <a href="index.php" class="btn btn-default">Voltar</a>
+        <a href="produtos.php" class="btn btn-default">Voltar</a>
         <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
 </form>

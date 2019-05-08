@@ -7,6 +7,7 @@
 <script>
 $(document).on('click', '.delete-object', function(){
  
+    var page = $(this).attr('delete');
     var id = $(this).attr('delete-id');
  
     bootbox.confirm({
@@ -23,7 +24,8 @@ $(document).on('click', '.delete-object', function(){
         },
         callback: function (result) {
             if(result==true){
-                $.post('excluir_produto.php', {
+                $.post('excluir.php', {
+                    object_page: page,
                     object_id: id
                 }, function(data){
                     location.reload();

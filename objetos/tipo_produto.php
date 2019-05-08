@@ -33,6 +33,19 @@ class TipoProduto{
         }
     }
 
+    function delete(){
+        $query = "DELETE FROM " . $this->table_name . " WHERE tipo_produto_id = ?";
+         
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->tipo_produto_id);
+     
+        if($result = $stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     function update(){
         $query = "UPDATE " 
                     . $this->table_name . " 
@@ -70,7 +83,7 @@ class TipoProduto{
         return $stmt;
     }
 
-    function getTipoProduto(){
+    function getTipoProdutoById(){
         $query = "SELECT * FROM " . $this->table_name . " WHERE tipo_produto_id = ?";
     
         $stmt = $this->conn->prepare( $query );
@@ -81,5 +94,20 @@ class TipoProduto{
         
         $this->nome = $row['nome'];
         $this->percentual_imposto = $row['percentual_imposto']; 
+    }
+
+    function getAll(){
+ 
+        $query = "SELECT
+                    *
+                FROM
+                    " . $this->table_name . "
+                ORDER BY
+                    nome ASC";
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->execute();
+     
+        return $stmt;
     }
 }
