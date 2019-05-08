@@ -37,42 +37,55 @@ if($_POST){
 ?>
  
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}");?>" method="post">
-    <table class='table table-hover table-responsive table-bordered'>
-        <tr>
-            <td>Produto</td>
-            <td><input type='text' name='nome' value='<?php echo $produto->nome; ?>' class='form-control' /></td>
-        </tr>
-        <tr>
-            <td>Preço</td>
-            <td><input type='text' name='preco' value='<?php echo $produto->preco; ?>' class='form-control' /></td>
-        </tr>
-        <tr>
-            <td>Tipo Produto</td>
-            <td>
-            <?php
+<div class="panel panel-primary">
+        <div class="panel-heading">Novo tipo produto</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Produto</label>
+                        <input type='text' name='nome' value='<?php echo $produto->nome; ?>' class='form-control' />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Preço</label>
+                        <input type='text' name='preco' value='<?php echo $produto->preco; ?>' class='form-control' />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Tipo Produto</label>
+                        <?php
+                        $stmt = $tipoProduto->read();
+                        echo "<select class='form-control' name='tipo_produto_id'>";
+                            echo "<option>Selecionar tipo produto</option>";
+                            
+                            while ($row_category = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                $tipo_produto_id=$row_category['tipo_produto_id'];
+                                $nome = $row_category['nome'];
+                        
+                                // current category of the product must be selected
+                                if($produto->tipo_produto_id==$tipo_produto_id){
+                                    echo "<option value='$tipo_produto_id' selected>";
+                                }else{
+                                    echo "<option value='$tipo_produto_id'>";
+                                }
+                        
+                                echo "$nome</option>";
+                            }
 
-            $stmt = $tipoProduto->read();
-            echo "<select class='form-control' name='tipo_produto_id'>";
-                echo "<option>Selecionar tipo produto</option>";
-                
-                while ($row_category = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    $tipo_produto_id=$row_category['tipo_produto_id'];
-                    $nome = $row_category['nome'];
-             
-                    if($produto->tipo_produto_id==$tipo_produto_id){
-                        echo "<option value='$tipo_produto_id' selected>";
-                    }else{
-                        echo "<option value='$tipo_produto_id'>";
-                    }
-             
-                    echo "$nome</option>";
-                }
-
-            echo "</select>";
-            ?>
-            </td>
-        </tr>
-    </table>
+                        echo "</select>";
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="pull-right">
         <a href="produtos.php" class="btn btn-default">Voltar</a>
         <button type="submit" class="btn btn-primary">Salvar</button>

@@ -1,3 +1,8 @@
+<body>
+    <div class="container">
+        <div class='page-header'>
+            <h1>Vendas</h1>
+        </div>
 <?php
 
 $page_title = "Produtos";
@@ -54,7 +59,7 @@ if($num > 0){
                 <span class='glyphicon glyphicon-edit'></span> Editar
                 </a>
 
-                <a delete-id='{$produto_id}' delete='produto' class='btn btn-danger delete-object'>
+                <a delete-id='{$produto_id}' page='produto' class='btn btn-danger delete-object'>
                 <span class='glyphicon glyphicon-remove'></span> Excluir
                 </a>";
                 echo "</div>";

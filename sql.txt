@@ -14,9 +14,15 @@ CREATE TABLE produto(
 
 CREATE TABLE venda(
  venda_id serial UNIQUE,
+ valor_total_venda decimal (10,2) NOT NULL,
+ valor_total_imposto_venda decimal (10,2) NOT NULL,
+ PRIMARY KEY (venda_id)
+);
+
+CREATE TABLE item_venda(
+ venda_id INTEGER NOT NULL REFERENCES venda(venda_id),
  produto_id INTEGER NOT NULL REFERENCES produto(produto_id),
  quantidade INTEGER NOT NULL,
  valor_total decimal (10,2) NOT NULL,
- valor_total_imposto decimal (10,2) NOT NULL,
- PRIMARY KEY (venda_id, produto_id)
+ valor_total_imposto decimal (10,2) NOT NULL
 );

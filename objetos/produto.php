@@ -109,4 +109,23 @@ class Produto{
         $this->preco = $row['preco'];
         $this->tipo_produto_id = $row['tipo_produto_id'];
     }
+
+    function getProdutoByNome($query){
+        $query = "SELECT
+                    *
+                FROM
+                    " . $this->table_name . "
+                WHERE
+                    nome = ?";
+     
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(1, $query);
+        $stmt->execute();
+     
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+     
+        $this->nome = $row['nome'];;
+        $this->preco = $row['preco'];
+        $this->tipo_produto_id = $row['tipo_produto_id'];
+    }
 }

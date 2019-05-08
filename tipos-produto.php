@@ -42,7 +42,7 @@ if($num > 0){
                 <span class='glyphicon glyphicon-edit'></span> Editar
                 </a>
 
-                <a delete-id='{$tipo_produto_id}' delete='tipo-produto' class='btn btn-danger delete-object'>
+                <a delete-id='{$tipo_produto_id}' page='tipo-produto' class='btn btn-danger delete-object'>
                 <span class='glyphicon glyphicon-remove'></span> Excluir
                 </a>";
                 echo "</div>";
