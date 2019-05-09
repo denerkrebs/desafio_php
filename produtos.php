@@ -1,8 +1,3 @@
-<body>
-    <div class="container">
-        <div class='page-header'>
-            <h1>Vendas</h1>
-        </div>
 <?php
 
 $page_title = "Produtos";

@@ -64,7 +64,6 @@ class Produto{
     }
 
     function readAll(){
- 
         $query = "SELECT
                     produto_id, nome, preco, tipo_produto_id
                 FROM
@@ -110,22 +109,18 @@ class Produto{
         $this->tipo_produto_id = $row['tipo_produto_id'];
     }
 
-    function getProdutoByNome($query){
+    function getProdutosByNome($string){
         $query = "SELECT
                     *
                 FROM
                     " . $this->table_name . "
-                WHERE
-                    nome = ?";
+                WHERE 
+                    nome LIKE ?";
      
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(1, $query);
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindValue(1, "%$string%", PDO::PARAM_STR);
         $stmt->execute();
      
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-     
-        $this->nome = $row['nome'];;
-        $this->preco = $row['preco'];
-        $this->tipo_produto_id = $row['tipo_produto_id'];
+        return $stmt;
     }
 }

@@ -39,34 +39,6 @@ $(document).on('click', '.delete-object', function(){
  
     return false;
 });
-
-$(document).on('click', '.search', function(){
-
-var query = $('#query').val();
-console.log(query);
-
-if(query != ""){
-    $.post('buscar-produtos.php', {
-        object_query: query,
-    }, function(data){
-        $("btnBuscar").click();
-    }).fail(function() {
-        alert('Não foi possivel excluir');
-    });
-} else {
-    alert("String vazia");
-}
-
-// if(query != ""){
-//     $.post('buscar-produtos.php', {
-//         object_query: query,
-//     }).fail(function() {
-//         alert('Não foi possivel realizar a busca');
-//     });
-// }
-
-return false;
-});
 </script>
 
 </body>
