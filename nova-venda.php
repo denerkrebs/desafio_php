@@ -1,10 +1,11 @@
 <?php
-
+session_start();
 $page_title = "Vendas";
 
 require __DIR__ . '/include/header.php';
 require __DIR__ . '/config/db.php';
 require __DIR__ . '/objetos/produto.php';
+require __DIR__ . '/objetos/tipo_produto.php';
 require __DIR__ . '/objetos/venda.php';
 require __DIR__ . '/objetos/item_venda.php';
 
@@ -12,20 +13,12 @@ $database = new Database();
 $db = $database->getConnection();
 
 $venda = new Venda($db);
-$venda->valor_total_venda = 0;
-$venda->valor_total_imposto_venda = 0;
-$venda->create();
-
 $itemVenda = new ItemVenda($db);
 $produto = new Produto($db);
-
-$itemVendas = array($itemVenda);
+$tipoProduto = new TipoProduto($db);
 
 if($_POST){
-    $itemVenda->produto_id = $_POST['produto_id'];
-    $itemVenda->quantidade = $_POST['quantidade'];
-    $itemVenda->valor_total = ""; 
-    $itemVenda->valor_total_imposto = ""; 
+    
 }
 
 ?>
@@ -65,16 +58,39 @@ if($_POST){
             </tr>
             </thead>
             <?php
-            foreach ($itemVendas as $itemVenda) {
+            
+            $itensVenda = $_SESSION["itensVenda"];
+            $valor_total_venda = 0;
+            $valor_total_imposto_venda = 0;
+
+            foreach ($itensVenda as $itemSelecionado) {
+                $produto->produto_id = $itemSelecionado[0];
+                $produto->getProdutoById();
+                
+                $quantidade = $itemSelecionado[1];
+                $valorTotal = $produto->preco * $itemSelecionado[1];
+
+                $tipoProduto->tipo_produto_id = $produto->tipo_produto_id;
+                $tipoProduto->getTipoProdutoById();
+
+                $valor_total_imposto = $valorTotal * ($tipoProduto->percentual_imposto / 100);
+                
+                $valor_total_venda = $valor_total_venda + $valorTotal;
+                $valor_total_imposto_venda = $valor_total_imposto_venda + $valor_total_imposto;
+                
                 echo "<tr>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td>{$itemVenda->quantidade}</td>";
-                    echo "<td>{$itemVenda->valor_total}</td>";
-                    echo "<td>{$itemVenda->valor_total_imposto}</td>";
+                    echo "<td>{$produto->nome}</td>";
+                    echo "<td>{$produto->preco}</td>";
+                    echo "<td>{$quantidade}</td>";
+                    echo "<td>R$ {$valorTotal}</td>";
+                    echo "<td>R$ {$valor_total_imposto}</td>";
                 echo "</tr>";
             }
-        echo "</div>";
+        echo "</table>";
+    echo "</div>";
+    echo "<div class='pull-left'>";
+        echo "<h3><b>Valor total da Venda:</b> R$ " . $valor_total_venda . "</h3>";
+        echo "<h3><b>Valor total imposto:</b> R$ " . $valor_total_imposto_venda . "</h3>";
     echo "</div>";
 echo "</div>";
 

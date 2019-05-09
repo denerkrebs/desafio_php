@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $page_title = "Home";
 
 require __DIR__ . '/include/header.php'; 

@@ -9,7 +9,6 @@
     <title><?php echo $page_title; ?></title>
  
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
   
     <!-- our custom CSS -->
     <link rel="stylesheet" href="/css/style.css" />

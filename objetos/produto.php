@@ -90,7 +90,7 @@ class Produto{
         }
     }
 
-    function buscarProdutoId(){
+    function getProdutoById(){
         $query = "SELECT
                     *
                 FROM

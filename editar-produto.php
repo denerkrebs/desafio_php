@@ -16,7 +16,7 @@ $produto = new Produto($db);
 $tipoProduto = new TipoProduto($db);
 
 $produto->produto_id = $id;
-$produto->buscarProdutoId();
+$produto->getProdutoById();
 
 ?>
 <?php
