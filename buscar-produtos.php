@@ -61,8 +61,6 @@ $tipoProduto = new TipoProduto($db);
 $stmt = $produto->getProdutosByNome($string);
 $num = $stmt->rowCount();
 
-echo "<a href='nova-venda.php' class='btn btn-default pull-right'>Voltar</a>";
-
 if($num > 0){
     echo "<form action='buscar-produtos.php' method='post'>";
         echo "<table class='table table-hover table-responsive'>";
@@ -108,4 +106,7 @@ if($num > 0){
 else{
     echo "<div class='alert alert-info'>Nenhum produto cadastrado foi encontrado</div>";
 }
+
+echo "<a href='nova-venda.php' class='btn btn-default pull-right'>Voltar</a>";
+
 require __DIR__ . '/include/footer.php';

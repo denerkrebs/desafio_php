@@ -19,13 +19,17 @@ $valor_total_venda = 0;
 $valor_total_imposto_venda = 0;
 
 if($_POST){
-    $venda->valor_total_venda = $_POST['valorTotalVenda'];
-    $venda->valor_total_imposto_venda = $_POST['valorTotalImpostoVenda'];
+    $venda->valor_total_venda = $_SESSION["ValorTotalVenda"];
+    $venda->valor_total_imposto_venda = $_SESSION["ValorTotalImpostoVenda"];
     
     $return = $venda->create();
 
     if($return){
         echo "<div class='alert alert-success'>Venda foi registrado</div>";
+
+        $_SESSION["ValorTotalVenda"] = 0;
+        $_SESSION["ValorTotalImpostoVenda"] = 0;
+        $_SESSION["itensVenda"] = array();
     }
     else{
         echo "<div class='alert alert-danger'>Não foi realizar a ação</div>";
@@ -87,6 +91,9 @@ if($_POST){
                         
                         $valor_total_venda = $valor_total_venda + $valorTotal;
                         $valor_total_imposto_venda = $valor_total_imposto_venda + $valor_total_imposto;
+
+                        $_SESSION["ValorTotalVenda"] = $valor_total_venda;
+                        $_SESSION["ValorTotalImpostoVenda"] = $valor_total_imposto_venda;
                         
                         echo "<tr>";
                             echo "<td>{$produto->nome}</td>";
