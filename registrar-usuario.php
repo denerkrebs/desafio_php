@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: home.php");
-    exit;
-}
+// if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+//     header("location: home.php");
+//     exit;
+// }
 
-$page_title = "Login";
+$page_title = "Registrar usuário";
 
 require __DIR__ . '/config/db.php';
 require __DIR__ . '/include/header.php';
@@ -22,38 +22,34 @@ if($_POST){
         echo "<div class='alert alert-warning'>Insira o nome de usuário e senha</div>";
     } else {
         $usuario->nome_usuario = $_POST['username'];
-        $senha = $_POST['password'];
+        $usuario->senha = $_POST['password'];
         
-        $return = $usuario->getUsuario();
-        
-            if(password_verify($senha, $usuario->senha)){
-                session_start();
-                
-                $_SESSION["loggedin"] = true;
-                $_SESSION["usuario_id"] = $usuario_id;
-                $_SESSION["nome_usuario"] = $nome_usuario;
-                
-                header("location: home.php");
-            } else {
-                echo "<div class='alert alert-success'>Senha invalida</div>";
-            }
+        $return = $usuario->create();
+
+        if($return){
+            echo "<div class='alert alert-success'>Usuario foi registrado</div>";
+        }
+        else{
+            echo "<div class='alert alert-danger'>Não foi realizar a ação</div>";
+        }
     }
 }
 
 ?>
+
 <div class="wrapper">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-sm-8">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
                 <label>Usuário</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $usuario->nome_usuario; ?>">
+                <input type="text" name="username" class="form-control">
             </div>    
             <div class="form-group">
                 <label>Senha</label>
                 <input type="password" name="password" class="form-control">
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Login">
+                <input type="submit" class="btn btn-primary" value="Registrar">
             </div>
         </form>
     </div>

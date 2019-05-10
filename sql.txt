@@ -20,6 +20,13 @@ CREATE TABLE produto(
  PRIMARY KEY (produto_id, tipo_produto_id)
 );
 
+CREATE TABLE usuario(
+ usuario_id serial UNIQUE,
+ nome_usuario VARCHAR (200) NOT NULL,
+ senha VARCHAR (200) NOT NULL,
+ PRIMARY KEY (usuario_id)
+);
+
 CREATE TABLE venda(
  venda_id serial UNIQUE,
  valor_total_venda decimal (10,2) NOT NULL,
