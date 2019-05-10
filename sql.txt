@@ -1,3 +1,11 @@
+CREATE DATABASE desafio_php
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Portuguese_Brazil.1252'
+       LC_CTYPE = 'Portuguese_Brazil.1252'
+       CONNECTION LIMIT = -1;
+
 CREATE TABLE tipo_produto(
  tipo_produto_id serial UNIQUE PRIMARY KEY,
  nome VARCHAR (200) NOT NULL,
@@ -17,12 +25,4 @@ CREATE TABLE venda(
  valor_total_venda decimal (10,2) NOT NULL,
  valor_total_imposto_venda decimal (10,2) NOT NULL,
  PRIMARY KEY (venda_id)
-);
-
-CREATE TABLE item_venda(
- venda_id INTEGER NOT NULL REFERENCES venda(venda_id),
- produto_id INTEGER NOT NULL REFERENCES produto(produto_id),
- quantidade INTEGER NOT NULL,
- valor_total decimal (10,2) NOT NULL,
- valor_total_imposto decimal (10,2) NOT NULL
 );

@@ -11,9 +11,6 @@ $db = $database->getConnection();
  
 $tipoProduto = new TipoProduto($db);
 
-?>
-<?php
-
 if($_POST){
     $tipoProduto->nome = $_POST['nome'];
     $tipoProduto->percentual_imposto = $_POST['percentual_imposto'];
@@ -21,7 +18,8 @@ if($_POST){
     $return = $tipoProduto->create();
 
     if($return){
-        echo "<div class='alert alert-success'>Tipo produto registrado</div>";
+        header("Location: tipos-produto.php");
+        die();
     }
     else{
         echo "<div class='alert alert-danger'>Não foi realizar a ação</div>";
@@ -51,7 +49,7 @@ if($_POST){
             </div>
         </div>
     </div>
-    <div class="pull-right">
+    <div class="btn-group pull-right">
         <a href="tipos-produto.php" class="btn btn-default">Voltar</a>
         <button type="submit" class="btn btn-primary">Salvar</button>
     </div>

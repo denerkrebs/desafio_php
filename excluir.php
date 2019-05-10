@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require __DIR__ . '/config/db.php';
 require __DIR__ . '/objetos/produto.php';
@@ -19,6 +20,17 @@ if($_POST){
         $tipoProduto = new TipoProduto($db);
         $tipoProduto->tipo_produto_id = $id;
         $return = $tipoProduto->delete();
+    } else if($page == "venda") {
+        if(isset($_SESSION["itensVenda"])){
+            $itensVenda = $_SESSION["itensVenda"];
+
+            foreach($itensVenda as $key => $itemVenda){
+                if(in_array($id, $itemVenda)){
+                    unset($itensVenda[$key]);
+                }
+            }
+            $_SESSION["itensVenda"] = $itensVenda;
+        }
     }
 
     if($return){

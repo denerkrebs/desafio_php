@@ -51,16 +51,17 @@ class TipoProduto{
                     . $this->table_name . " 
                 SET 
                     nome = :nome, 
-                    percentual_imposto = :percentual_imposto, 
+                    percentual_imposto = :percentual_imposto
                 WHERE
-                    produto_id = :produto_id";
+                    tipo_produto_id = :tipo_produto_id";
     
         $stmt = $this->conn->prepare($query);
     
+        $this->tipo_produto_id=htmlspecialchars(strip_tags($this->tipo_produto_id));
         $this->nome=htmlspecialchars(strip_tags($this->nome));
         $this->percentual_imposto=htmlspecialchars(strip_tags($this->percentual_imposto));
     
-        $stmt->bindParam(":produto_id", $this->tipo_produto_id);
+        $stmt->bindParam(":tipo_produto_id", $this->tipo_produto_id);
         $stmt->bindParam(":nome", $this->nome);
         $stmt->bindParam(":percentual_imposto", $this->percentual_imposto);
     

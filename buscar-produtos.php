@@ -1,6 +1,6 @@
 <?php
 session_start();
-$page_title = "Produtos";
+$page_title = "Busca";
 
 require __DIR__ . '/include/header.php';
 require __DIR__ . '/config/db.php';
@@ -22,6 +22,14 @@ if($_POST){
     } else {
         $produto_id = $_POST['produto_id'];
         $quantidade = $_POST['quantidade'];
+        
+        foreach($itensVenda as $key => $itemVenda){
+            if(in_array($produto_id, $itemVenda)){
+                $quantidade = $itemVenda[1] + $quantidade;
+                
+                unset($itensVenda[$key]);
+            }
+        }
 
         $itemSelecionado = array($produto_id, $quantidade);
 
@@ -43,6 +51,8 @@ $tipoProduto = new TipoProduto($db);
 
 $stmt = $produto->getProdutosByNome($string);
 $num = $stmt->rowCount();
+
+echo "<a href='nova-venda.php' class='btn btn-default pull-right'>Voltar</a>";
 
 if($num > 0){
     echo "<form action='buscar-produtos.php' method='post'>";
@@ -74,7 +84,7 @@ if($num > 0){
                         echo $tipoProduto->percentual_imposto + 0 . "%";
                     echo "</td>";
                     echo "<td>";
-                        echo "<input type='text' name='quantidade' class='form-control'/>";
+                        echo "<input type='number' name='quantidade' class='form-control'/>";
                     echo "</td>";
                     echo "<td>";
                         echo "<button name='produto_id' type='submit' value='" . $produto_id . "' class='btn btn-primary btn-block'>Adicionar</button>";
@@ -84,6 +94,7 @@ if($num > 0){
 
         echo "</table>";
     echo "</form>";
+    
 }
 else{
     echo "<div class='alert alert-info'>Nenhum produto cadastrado foi encontrado</div>";

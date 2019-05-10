@@ -18,8 +18,6 @@ $tipoProduto = new TipoProduto($db);
 $produto->produto_id = $id;
 $produto->getProdutoById();
 
-?>
-<?php
 if($_POST){
     $produto->nome = $_POST['nome'];
     $produto->preco = $_POST['preco'];
@@ -28,7 +26,8 @@ if($_POST){
     $return = $produto->update();
 
     if($return){
-        echo "<div class='alert alert-success'>Produto alterado</div>";
+        header("Location: produtos.php");
+        die();
     }
     else{
         echo "<div class='alert alert-danger'>Não foi realizar a alteração</div>";
@@ -86,7 +85,7 @@ if($_POST){
             </div>
         </div>
     </div>
-    <div class="pull-right">
+    <div class="btn-group pull-right">
         <a href="produtos.php" class="btn btn-default">Voltar</a>
         <button type="submit" class="btn btn-primary">Salvar</button>
     </div>

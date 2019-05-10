@@ -7,8 +7,13 @@ require __DIR__ . '/config/db.php';
 require __DIR__ . '/objetos/produto.php';
 require __DIR__ . '/objetos/tipo_produto.php';
 
-echo "<div class='right-button-margin'>";
-    echo "<a href='produto.php' class='btn btn-primary pull-right'>Criar Produto</a>";
+echo "<div class='row'>";
+    echo "<div class='col-sm-12'>";
+        echo "<div class='btn-group pull-right'>";
+        echo "<a href='index.php' class='btn btn-default'>Voltar</a>";
+            echo "<a href='produto.php' class='btn btn-primary'>Adicionar produto</a>";
+        echo "</div>";
+    echo "</div>";
 echo "</div>";
  
 $database = new Database();
