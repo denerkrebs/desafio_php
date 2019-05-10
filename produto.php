@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+if(!isset($_SESSION["loggedin"])){
+    header("location: index.php");
+    exit;
+}
+
 $page_title = "Produto";
 
 require __DIR__ . '/include/header.php';
@@ -21,7 +28,8 @@ if($_POST){
     $return = $produto->create();
 
     if($return){
-        echo "<div class='alert alert-success'>Produto foi registrado</div>";
+        header("Location: produtos.php");
+        die();
     }
     else{
         echo "<div class='alert alert-danger'>Não foi realizar a ação</div>";
@@ -45,7 +53,7 @@ if($_POST){
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label>Preço</label>
-                        <input type='text' name='preco' value='<?php echo $produto->preco; ?>' class='form-control' />
+                        <input type='number' min="0" name='preco' value='<?php echo $produto->preco; ?>' class='form-control' />
                     </div>
                 </div>
             </div>

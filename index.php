@@ -30,8 +30,8 @@ if($_POST){
                 session_start();
                 
                 $_SESSION["loggedin"] = true;
-                $_SESSION["usuario_id"] = $usuario_id;
-                $_SESSION["nome_usuario"] = $nome_usuario;
+                $_SESSION["usuario_id"] = $usuario->usuario_id;
+                $_SESSION["nome_usuario"] = $usuario->nome_usuario;
                 
                 header("location: home.php");
             } else {

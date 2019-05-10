@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+if(!isset($_SESSION["loggedin"])){
+    header("location: index.php");
+    exit;
+}
+
 $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR');
 
 $page_title = "Editar produto";
@@ -51,7 +58,7 @@ if($_POST){
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label>Preço</label>
-                        <input type='text' name='preco' value='<?php echo $produto->preco; ?>' class='form-control' />
+                        <input type='text' name='preco' min="0" value='<?php echo $produto->preco; ?>' class='form-control' />
                     </div>
                 </div>
             </div>

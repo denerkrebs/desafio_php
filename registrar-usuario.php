@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-//     header("location: home.php");
-//     exit;
-// }
+if(!isset($_SESSION["loggedin"])){
+    header("location: index.php");
+    exit;
+}
 
 $page_title = "Registrar usuário";
 
@@ -27,7 +27,8 @@ if($_POST){
         $return = $usuario->create();
 
         if($return){
-            echo "<div class='alert alert-success'>Usuario foi registrado</div>";
+            header("Location: home.php");
+            die();
         }
         else{
             echo "<div class='alert alert-danger'>Não foi realizar a ação</div>";

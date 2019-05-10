@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+if(!isset($_SESSION["loggedin"])){
+    header("location: index.php");
+    exit;
+}
+
 $page_title = "Tipo produto";
 
 require __DIR__ . '/include/header.php';
@@ -43,7 +50,7 @@ if($_POST){
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label>Percentual imposto</label>
-                        <input type='text' name='percentual_imposto' class='form-control' />
+                        <input type='number' min="0" name='percentual_imposto' class='form-control' />
                     </div>
                 </div>
             </div>

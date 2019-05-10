@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if(!isset($_SESSION["loggedin"])){
+    header("location: index.php");
+    exit;
+}
+
 $page_title = "Vendas";
 
 require __DIR__ . '/include/header.php';
@@ -19,20 +25,29 @@ $valor_total_venda = 0;
 $valor_total_imposto_venda = 0;
 
 if($_POST){
-    $venda->valor_total_venda = $_SESSION["ValorTotalVenda"];
-    $venda->valor_total_imposto_venda = $_SESSION["ValorTotalImpostoVenda"];
-    
-    $return = $venda->create();
+    $totalVenda = $_SESSION["ValorTotalVenda"];
+    $totalImposto =  $_SESSION["ValorTotalImpostoVenda"];
 
-    if($return){
-        echo "<div class='alert alert-success'>Venda foi registrado</div>";
+    if($totalImposto != 0 && $totalVenda != 0){
+        $venda->valor_total_venda = $totalVenda;
+        $venda->valor_total_imposto_venda = $totalImposto;
 
-        $_SESSION["ValorTotalVenda"] = 0;
-        $_SESSION["ValorTotalImpostoVenda"] = 0;
-        $_SESSION["itensVenda"] = array();
-    }
-    else{
-        echo "<div class='alert alert-danger'>Não foi realizar a ação</div>";
+        $venda->usuario_id = $_SESSION["usuario_id"];
+        
+        $return = $venda->create();
+
+        if($return){
+            echo "<div class='alert alert-success'>Venda foi registrado</div>";
+
+            $_SESSION["ValorTotalVenda"] = 0;
+            $_SESSION["ValorTotalImpostoVenda"] = 0;
+            $_SESSION["itensVenda"] = array();
+        }
+        else{
+            echo "<div class='alert alert-danger'>Não foi realizar a ação</div>";
+        }
+    } else {
+        echo "<div class='alert alert-danger'>Nenhum produto adicionado</div>";
     }
 }
 
